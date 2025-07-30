@@ -1,0 +1,328 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+  font-family: 'Segoe UI', sans-serif;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.book {
+  perspective: 1200px;
+  width: 400px;
+  height: 550px;
+  position: relative;
+}
+
+.page {
+  width: 100%;
+  height: 100%;
+  background: white;
+  position: absolute;
+  top: 0;
+  left: 0;
+  backface-visibility: hidden;
+  border: 2px solid #e91e63;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  transition: transform 1s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.cover {
+  background: #f06292;
+  color: white;
+  z-index: 2;
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertikal */
+  align-items: center;     /* Horizontal */
+  text-align: center;      /* Pastikan teks-nya juga center */
+}
+
+.cover h1 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.cover p {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.content {
+  background: rgba(245, 224, 195, 0.8);
+  transform: rotateY(-180deg);
+  z-index: 1;
+}
+
+.book.open .cover {
+  transform: rotateY(180deg);
+}
+
+.book.open .content {
+  transform: rotateY(0deg);
+}
+
+.inner-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+  padding: 1rem;
+  text-align: center;
+  color: #444;
+}
+
+.inner-content h2 {
+  margin-top: 0;
+  color: #e91e63;
+}
+
+.inner-content p {
+  margin: 1rem 0;
+}
+
+#toPhotoBtn {
+  align-self: center; /* Center tombol secara horizontal */
+  margin-bottom: 1rem;
+}
+
+.photo {
+  background: #fff;
+  transform: rotateY(-360deg);
+  z-index: 0;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 1s ease;
+}
+
+.photo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between; /* Atur jarak antar elemen */
+  padding: 2rem 1rem 1rem;
+  background: white;
+  transform: rotateY(-180deg);
+  z-index: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+
+.photo img {
+  width: 200px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  margin: 1rem auto 1rem auto;
+  display: block;
+}
+
+
+.photo p {
+  color: #e91e63;
+  font-weight: bold;
+  font-size: 1rem;
+  margin: 0;
+}
+.photo h2 {
+  font-size: 1.2rem;
+  color: #e91e63;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  padding: 0 1rem;
+}
+
+
+
+.book.show-photo .content {
+  transform: rotateY(180deg);
+  z-index: 1;
+}
+
+.book.show-photo .photo {
+  transform: rotateY(0deg);
+  z-index: 2;
+}
+
+#toPhotoBtn {
+  margin-top: 1.5rem;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  background: #e91e63;
+  color: white;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+#toPhotoBtn:hover {
+  background: #d81b60;
+}
+
+/* Transisi antar halaman foto */
+.book.show-photo-1 #page2 {
+  transform: rotateY(180deg);
+  z-index: 1;
+}
+.book.show-photo-1 #page3 {
+  transform: rotateY(0deg);
+  z-index: 2;
+}
+
+.book.show-photo-2 #page3 {
+  transform: rotateY(180deg);
+  z-index: 1;
+}
+.book.show-photo-2 #page4 {
+  transform: rotateY(0deg);
+  z-index: 2;
+}
+
+.book.show-photo-3 #page4 {
+  transform: rotateY(180deg);
+  z-index: 1;
+}
+.book.show-photo-3 #page5 {
+  transform: rotateY(0deg);
+  z-index: 2;
+}
+
+.book.show-photo-4 #page5 {
+  transform: rotateY(180deg);
+  z-index: 1;
+}
+.book.show-photo-4 #page6 {
+  transform: rotateY(0deg);
+  z-index: 2;
+}
+.book.closing .page {
+  transition: none; /* Hapus animasi dari semua halaman dulu */
+  opacity: 0;
+  pointer-events: none;
+}
+
+.book.closing #cover {
+  transform: rotateY(0deg); /* Tutup cover ke depan */
+  z-index: 99;
+  opacity: 1;
+  pointer-events: auto;
+  transition: transform 1s ease;
+}
+/* Transisi ulang saat membuka kembali */
+.book:not(.closing) .page {
+  opacity: 1;
+  pointer-events: auto;
+  transition: transform 1s ease, opacity 0.5s ease;
+}
+.batik-particles {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background-image:
+    radial-gradient(#fff 2px, transparent 2px),
+    radial-gradient(#fff 2px, transparent 2px);
+  background-size: 10px 10px;
+  background-position: 0 0, 5px 5px;
+  opacity: 0.3;
+}
+
+.batik-particles.top-left {
+  top: 0;
+  left: 0;
+}
+
+.batik-particles.top-right {
+  top: 0;
+  right: 0;
+  transform: scaleX(-1);
+}
+
+.batik-particles.bottom-left {
+  bottom: 0;
+  left: 0;
+  transform: scaleY(-1);
+}
+
+.batik-particles.bottom-right {
+  bottom: 0;
+  right: 0;
+  transform: scale(-1, -1);
+}
+.falling-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible; /* ganti dari 'hidden' */
+  z-index: 10;
+}
+
+
+.falling {
+  position: absolute;
+  top: 0; /* Ganti dari -50px ke 0 */
+  font-size: 24px;
+  opacity: 0.9;
+  animation: fall linear forwards;
+}
+
+
+@keyframes fall {
+  to {
+    transform: translateY(500px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+#nextText3 {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: bold;
+  color: #e91e63;
+}
+#nextText4 {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: bold;
+  color: #141313;
+}
+.italic-text {
+  font-style: italic;
+  color: #d81b60;
+  font-family: 'Segoe UI', sans-serif;
+  opacity: 0.8;
+}
+
+
+
+
+
+
